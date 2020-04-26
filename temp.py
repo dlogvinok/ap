@@ -18,23 +18,37 @@ def f(url):
     try:
         response = requests.get(url, headers = getHeaders())
         if response.status_code == 200:
-            if bs(response.text, 'lxml').find('title').text != 'Доступ временно заблокирован':
-                    pass
-            else:
-                for i in range(int(getp['plen'])):
-                    try:
-                        proxy_pool = getp['proxy_pool']
-                        proxy = next(proxy_pool)
-                        print('Try connect {} with proxy {}'.format(i, proxy))
-                        response = requests.get(url,proxies={"http": proxy, "https": proxy}, headers = getHeaders())
-                        if response.status_code == 200:
-                                if bs(response.text, 'lxml').find('title').text != 'Доступ временно заблокирован':
-                                        pass
-                    except:
-                        response = 'err'
+            if bs(response.text, 'lxml').find('title').text == 'Доступ временно заблокирован':
+                    for i in range(int(getp['plen'])):
+                        try:
+                            proxy_pool = getp['proxy_pool']
+                            proxy = next(proxy_pool)
+                            print('Try connect {} with proxy {}'.format(i, proxy))
+                            response = requests.get(url,proxies={"http": proxy, "https": proxy}, headers = getHeaders())
+                            if response.status_code == 200:
+                                    if bs(response.text, 'lxml').find('title').text != 'Доступ временно заблокирован':
+                                            return response
+                        except:
+                            response = 'err'
+        elif response.status_code == 403:
+            for i in range(int(getp['plen'])):
+                        try:
+                            proxy_pool = getp['proxy_pool']
+                            proxy = next(proxy_pool)
+                            print('Try connect {} with proxy {}'.format(i, proxy))
+                            response = requests.get(url,proxies={"http": proxy, "https": proxy}, headers = getHeaders())
+                            if response.status_code == 200:
+                                    if bs(response.text, 'lxml').find('title').text != 'Доступ временно заблокирован':
+                                            return response
+                        except:
+                            response = 'err'
+        else:
+            return response
+        
     except Exception as e:
         print(e)
             
     return response
 
 r = f(url)
+

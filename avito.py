@@ -50,6 +50,20 @@ for i in range(1,8)[:1]:
         
         page = getContent(onepage)
         
+        # Автор объявления
+        try:
+            author = bs(r.text, 'lxml').find('div', attrs={'class':'seller-info-name js-seller-info-name'}).text.strip()
+        except:
+            author = ''
+        
+        try:
+            reviews = bs(r.text, 'lxml').find('span', attrs={'class':'seller-info-rating-caption'}).text.strip()
+        except:
+            reviews = ''
+        
+        try:
+            seller_info = bs(r.text, 'lxml').find_all('div', attrs={'class':'seller-info-value'})[1].div.text.strip()
+        
 #        заполняем атрибуты по одному объявлению
         box.append(name)
         box.append(cost)

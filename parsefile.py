@@ -26,10 +26,10 @@ def getProxies():
     
 #####################
 
-from fake_useragent import UserAgent
+#from fake_useragent import UserAgent
 
 def getHeaders():
-    ua = UserAgent()
+#    ua = UserAgent()
     headers = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding':'gzip, deflate, br',
@@ -40,7 +40,7 @@ def getHeaders():
             'Referer':'https://www.avito.ru/moskva?q=xbox+one+s',
             'TE':'Trailers',
             'Upgrade-Insecure-Requests':'1',
-            'User-Agent':ua.random
+            'User-Agent':'Chrome'
             }
     return headers
 
